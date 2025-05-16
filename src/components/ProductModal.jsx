@@ -1,7 +1,9 @@
 // components/ProductModal.jsx
 import { Modal } from "@mui/material";
+import { useProductContext } from "../Context/ProductContext";
 
-const ProductModal = ({ selectedProduct, setSelectedProduct }) => {
+const ProductModal = () => {
+  const { selectedProduct, setSelectedProduct } = useProductContext();
   return (
     <Modal open={!!selectedProduct} onClose={() => setSelectedProduct(null)}>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg w-96">

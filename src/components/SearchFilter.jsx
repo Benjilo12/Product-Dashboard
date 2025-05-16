@@ -1,25 +1,22 @@
 import { TextField, Select, MenuItem } from "@mui/material";
+import { useProductContext } from "../Context/ProductContext";
 
-const SearchFilter = ({
-  search,
-  setSearch,
-  categoryFilter,
-  setCategoryFilter,
-  categories,
-}) => {
+const SearchFilter = ({ categories }) => {
+  const { search, setSearch, categoryFilter, setCategoryFilter } =
+    useProductContext();
   return (
-    <div className="flex gap-4 mb-4">
+    <div className="flex gap-4 pl-2 mb-1 flex-wrap md:mb-8">
       <TextField
         label="Search by name"
         variant="outlined"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="flex-1"
+        className="md:w-150 w-90 py-3"
       />
       <Select
         value={categoryFilter}
         onChange={(e) => setCategoryFilter(e.target.value)}
-        className="w-48"
+        sx={{ width: 250 }}
       >
         <MenuItem value="all">All Categories</MenuItem>
         {categories.map((category) => (

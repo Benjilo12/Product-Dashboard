@@ -1,33 +1,32 @@
-// pages/Dashboard.js
-
-import { useState } from "react";
-import Topbar from "../components/Topbar";
 import { useCategories, useProducts } from "../services/useProducts";
-import SearchFilter from "../components/SearchFilter";
+
 import useFavorites from "../customhooks/useFavourites";
-import DeleteDialog from "../components/DeleteDialog";
-import ProductModal from "../components/ProductModal";
+
+import Topbar from "../components/Topbar";
+import SearchFilter from "../components/SearchFilter";
 import ProductTable from "../components/ProductsTable";
+import ProductModal from "../components/ProductModal";
+import DeleteDialog from "../components/DeleteDialog";
+import { useProductContext } from "../Context/ProductContext";
 
 function Dashboard() {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [search, setSearch] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
-  const [paginationModel, setPaginationModel] = useState({
-    page: 0,
-    pageSize: 10,
-  });
+  const {
+    selectedProduct,
+    setSelectedProduct,
+    search,
+    categoryFilter,
+    openDeleteDialog,
+    setOpenDeleteDialog,
+    deleteId,
+    setDeleteId,
+    paginationModel,
+    setPaginationModel,
+  } = useProductContext();
 
-  // Data hooks
   const { data: products = [], isLoading, error } = useProducts();
   const { data: categories = [] } = useCategories();
-
-  // Favorites hook
   const { favorites, toggleFavorite } = useFavorites();
 
-  // Filtered products
   const filteredProducts = Array.isArray(products)
     ? products.filter(
         (product) =>
@@ -37,35 +36,22 @@ function Dashboard() {
     : [];
 
   return (
-    <div className="bg-gray-100 min-h-screen flex-1">
+    <div className="bg-gray-100 flex-1 overflow-hidden">
       <Topbar />
-      <div className="p-8 max-w-7xl mx-auto">
-        <SearchFilter
-          search={search}
-          setSearch={setSearch}
-          categoryFilter={categoryFilter}
-          setCategoryFilter={setCategoryFilter}
-          categories={categories}
-        />
+      <div className="py-3 ml-4 max-w-9xl mx-auto">
+        <SearchFilter categories={categories} />
 
         <ProductTable
           products={filteredProducts}
           loading={isLoading}
           favorites={favorites}
           toggleFavorite={toggleFavorite}
-          setSelectedProduct={setSelectedProduct}
-          setDeleteId={setDeleteId}
           setOpenDeleteDialog={setOpenDeleteDialog}
-          paginationModel={paginationModel}
-          setPaginationModel={setPaginationModel}
           error={error}
           hasOriginalData={products.length > 0}
         />
 
-        <ProductModal
-          selectedProduct={selectedProduct}
-          setSelectedProduct={setSelectedProduct}
-        />
+        <ProductModal />
 
         <DeleteDialog
           open={openDeleteDialog}

@@ -5,9 +5,9 @@ import { IoMdClose } from "react-icons/io";
 function CustomSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="flex">
+    <div className="">
       <div
-        className={`fixed top-0 h-full left-0 md:w-64 bg-gray-900 transition-width duration-300 text-white ${
+        className={`relative top-0 h-dvh  left-0 md:w-64 bg-gray-900 transition-width duration-300 text-white ${
           isOpen ? "w-64" : "w-20"
         }`}
       >
