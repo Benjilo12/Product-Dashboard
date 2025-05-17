@@ -19,7 +19,9 @@ const ProductTable = ({
     setPaginationModel,
     setDeleteId,
     setSelectedProduct,
+    setOpenEditModal,
   } = useProductContext();
+
   const CustomNoRowsOverlay = () => (
     <Box
       height="auto"
@@ -114,9 +116,15 @@ const ProductTable = ({
             onClick={() => setSelectedProduct(params.row)}
             title="View Details"
           >
-            <VisibilityOutlinedIcon className="" />
+            <VisibilityOutlinedIcon />
           </IconButton>
-          <IconButton title="Edit">
+          <IconButton
+            title="Edit"
+            onClick={() => {
+              setSelectedProduct(params.row);
+              setTimeout(() => setOpenEditModal(true));
+            }}
+          >
             <FiEdit />
           </IconButton>
           <IconButton
@@ -137,21 +145,18 @@ const ProductTable = ({
     <Box
       sx={{
         width: 1500,
-        height: "80%",
+        height: "95%",
         bgcolor: "background.paper",
         borderRadius: 2,
         boxShadow: 2,
         p: 1,
-
-        // Add media query for responsiveness
         "@media (max-width: 768px)": {
-          width: "90%", // Full width on tablets and mobile
+          width: "90%",
           height: "80%",
-          overflowX: "auto", // Enable horizontal scroll
+          overflowX: "auto",
         },
-
         "@media (max-width: 480px)": {
-          width: "90%", // Full width on tablets and mobile
+          width: "90%",
         },
       }}
     >
@@ -177,9 +182,9 @@ const ProductTable = ({
             textAlign: "center",
           },
           "& .MuiDataGrid-columnHeaderTitle": {
-            fontSize: "1rem", // You can change this (e.g., "1.2rem", "18px", etc.)
-            fontFamily: "Poppins, sans-serif", // Replace with any font you want
-            fontWeight: 600, // e.g., 400, 500, 600, 700
+            fontSize: "1rem",
+            fontFamily: "Poppins, sans-serif",
+            fontWeight: 600,
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",

@@ -8,19 +8,16 @@ import ProductTable from "../components/ProductsTable";
 import ProductModal from "../components/ProductModal";
 import DeleteDialog from "../components/DeleteDialog";
 import { useProductContext } from "../Context/ProductContext";
+import EditProductModal from "../components/EditProductModal";
+import CreateProductModal from "../components/CreateProductModal";
 
 function Dashboard() {
   const {
-    selectedProduct,
-    setSelectedProduct,
     search,
     categoryFilter,
     openDeleteDialog,
     setOpenDeleteDialog,
     deleteId,
-    setDeleteId,
-    paginationModel,
-    setPaginationModel,
   } = useProductContext();
 
   const { data: products = [], isLoading, error } = useProducts();
@@ -52,6 +49,8 @@ function Dashboard() {
         />
 
         <ProductModal />
+        <EditProductModal />
+        <CreateProductModal />
 
         <DeleteDialog
           open={openDeleteDialog}
