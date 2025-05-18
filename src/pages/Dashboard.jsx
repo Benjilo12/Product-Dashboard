@@ -1,6 +1,4 @@
-import { useCategories, useProducts } from "../services/useProducts";
-
-import useFavorites from "../customhooks/useFavourites";
+import { useProducts } from "../services/useProducts";
 
 import Topbar from "../components/Topbar";
 import SearchFilter from "../components/SearchFilter";
@@ -12,18 +10,11 @@ import EditProductModal from "../components/EditProductModal";
 import CreateProductModal from "../components/CreateProductModal";
 
 function Dashboard() {
-  const {
-    search,
-    categoryFilter,
-    openDeleteDialog,
-    setOpenDeleteDialog,
-    deleteId,
-  } = useProductContext();
+  const { search, categoryFilter } = useProductContext();
 
   const { data: products = [], isLoading, error } = useProducts();
-  const { data: categories = [] } = useCategories();
-  const { favorites, toggleFavorite } = useFavorites();
 
+  //filter product
   const filteredProducts = Array.isArray(products)
     ? products.filter(
         (product) =>
@@ -36,27 +27,24 @@ function Dashboard() {
     <div className="bg-gray-100 flex-1 overflow-hidden">
       <Topbar />
       <div className="py-3 ml-4 max-w-9xl mx-auto">
-        <SearchFilter categories={categories} />
+        {/* filter component */}
+        <SearchFilter />
 
+        {/* product table component */}
         <ProductTable
           products={filteredProducts}
           loading={isLoading}
-          favorites={favorites}
-          toggleFavorite={toggleFavorite}
-          setOpenDeleteDialog={setOpenDeleteDialog}
           error={error}
           hasOriginalData={products.length > 0}
         />
-
+        {/* product detail modal */}
         <ProductModal />
+        {/* edit product modal */}
         <EditProductModal />
+        {/* create product modal */}
         <CreateProductModal />
-
-        <DeleteDialog
-          open={openDeleteDialog}
-          setOpen={setOpenDeleteDialog}
-          deleteId={deleteId}
-        />
+        {/* delete product dialog */}
+        <DeleteDialog />
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 import { TextField, Select, MenuItem, Button, Box } from "@mui/material";
 import { useProductContext } from "../Context/ProductContext";
+import { useCategories } from "../services/useProducts";
 
-const SearchFilter = ({ categories }) => {
+const SearchFilter = () => {
   const {
     search,
     setSearch,
@@ -10,6 +11,7 @@ const SearchFilter = ({ categories }) => {
     setOpenCreateModal,
   } = useProductContext();
 
+  const { data: categories = [] } = useCategories();
   return (
     <Box
       display="flex"
@@ -19,7 +21,7 @@ const SearchFilter = ({ categories }) => {
       px={1}
       flexWrap="wrap"
     >
-      {/* 1️⃣  Search – size="small" makes it 32 px tall instead of 40 px */}
+      {/* 1️⃣  Searchfield */}
       <TextField
         size="small"
         label="Search by name"
@@ -44,6 +46,7 @@ const SearchFilter = ({ categories }) => {
         ))}
       </Select>
 
+      {/* add product button */}
       <Box flexGrow={1} />
 
       <Button

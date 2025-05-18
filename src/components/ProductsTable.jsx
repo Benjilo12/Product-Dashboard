@@ -2,26 +2,23 @@ import { DataGrid } from "@mui/x-data-grid";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import { Box, IconButton } from "@mui/material";
+import { Box, CircularProgress, IconButton } from "@mui/material";
 import { useProductContext } from "../Context/ProductContext";
+import useFavorites from "../customhooks/useFavourites";
 
-const ProductTable = ({
-  products,
-  loading,
-  error,
-  favorites,
-  toggleFavorite,
-  setOpenDeleteDialog,
-  hasOriginalData,
-}) => {
+const ProductTable = ({ products, loading, error, hasOriginalData }) => {
   const {
     paginationModel,
     setPaginationModel,
     setDeleteId,
     setSelectedProduct,
     setOpenEditModal,
+    setOpenDeleteDialog,
   } = useProductContext();
 
+  const { favorites, toggleFavorite } = useFavorites();
+
+  // Custom no rows overlay
   const CustomNoRowsOverlay = () => (
     <Box
       height="auto"
@@ -116,7 +113,7 @@ const ProductTable = ({
             onClick={() => setSelectedProduct(params.row)}
             title="View Details"
           >
-            <VisibilityOutlinedIcon />
+            <VisibilityOutlinedIcon className="text-[20px]" />
           </IconButton>
           <IconButton
             title="Edit"
@@ -125,7 +122,7 @@ const ProductTable = ({
               setTimeout(() => setOpenEditModal(true));
             }}
           >
-            <FiEdit />
+            <FiEdit className="text-green-500 text-[20px]" />
           </IconButton>
           <IconButton
             onClick={() => {
@@ -134,7 +131,7 @@ const ProductTable = ({
             }}
             title="Delete"
           >
-            <FiTrash2 className="text-red-500" />
+            <FiTrash2 className="text-red-500 text-[20px]" />
           </IconButton>
         </Box>
       ),
@@ -144,61 +141,72 @@ const ProductTable = ({
   return (
     <Box
       sx={{
-        width: 1500,
+        width: "95%",
+        maxWidth: "1500px",
         height: "95%",
         bgcolor: "background.paper",
         borderRadius: 2,
         boxShadow: 2,
         p: 1,
+        mx: "auto",
+        overflow: "auto",
+        "@media (max-width: 1024px)": {
+          width: "95%",
+        },
         "@media (max-width: 768px)": {
-          width: "90%",
+          width: "95%",
           height: "80%",
-          overflowX: "auto",
         },
         "@media (max-width: 480px)": {
-          width: "90%",
+          width: "95%",
         },
       }}
     >
-      <DataGrid
-        rows={products}
-        columns={columns}
-        loading={loading}
-        paginationModel={paginationModel}
-        onPaginationModelChange={setPaginationModel}
-        pageSizeOptions={[5, 10, 25]}
-        components={{
-          NoRowsOverlay: CustomNoRowsOverlay,
-        }}
-        sx={{
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: "#0784d1 !important",
-            fontWeight: "bold",
-            fontSize: "1rem",
-            textAlign: "center",
-          },
-          "& .MuiDataGrid-cell": {
-            py: 1.5,
-            textAlign: "center",
-          },
-          "& .MuiDataGrid-columnHeaderTitle": {
-            fontSize: "1rem",
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 600,
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            backgroundColor: "#0784d1",
-            color: "white",
-          },
-          "& .MuiTablePagination-root": {
-            color: "white",
-          },
-          "& .MuiTablePagination-selectIcon": {
-            color: "white",
-          },
-        }}
-      />
+      {/* if loading show loader else datagrid */}
+      {loading ? (
+        <div className="grid place-items-center h-64">
+          <CircularProgress size={60} />
+        </div>
+      ) : (
+        <DataGrid
+          rows={loading ? [] : products}
+          columns={columns}
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          pageSizeOptions={[5, 10, 25]}
+          components={{
+            NoRowsOverlay: CustomNoRowsOverlay,
+          }}
+          sx={{
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: "#0784d1 !important",
+              fontWeight: "bold",
+              fontSize: "1rem",
+              textAlign: "center",
+            },
+            "& .MuiDataGrid-cell": {
+              py: 1.5,
+              textAlign: "center",
+            },
+            "& .MuiDataGrid-columnHeaderTitle": {
+              fontSize: "1rem",
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: 600,
+            },
+            "& .MuiDataGrid-footerContainer": {
+              borderTop: "none",
+              backgroundColor: "#0784d1",
+              color: "white",
+            },
+            "& .MuiTablePagination-root": {
+              color: "white",
+            },
+            "& .MuiTablePagination-selectIcon": {
+              color: "white",
+            },
+          }}
+        />
+      )}
     </Box>
   );
 };
