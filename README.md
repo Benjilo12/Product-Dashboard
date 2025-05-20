@@ -76,6 +76,6 @@ Setup instructions (how to run it locally)
 * Use the MUI Pagination component at the bottom of the table to:  
 * Navigate between pages using the **Previous/Next** buttons.  
 * Jump to a specific page by clicking a page number.  
-* Adjust rows per page using the dropdown (e.g., 10, 25, 50).  
+* Adjust rows per page using the dropdown (e.g., 5, 10).  
 * The table dynamically updates to show the selected page. 
 
