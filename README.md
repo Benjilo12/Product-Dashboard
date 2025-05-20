@@ -97,8 +97,7 @@ Setup instructions (how to run it locally)
        - Price range analysis.    
      - Use libraries like **Recharts** or **Victory** for seamless integration with React and MUI.
        
-   - **Real-Time Metrics**:  
-     - Track sales performance or user engagement (if applicable).  
+   - **Real-Time Metrics**:   
      - Display monthly/yearly summaries in a dedicated analytics tab.
     
      **Client-Side Routing**  
