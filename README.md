@@ -3,7 +3,8 @@ Setup instructions (how to run it locally)
 ### Steps  
 1. **Clone the repository:**  
    ```bash
-
+    https://github.com/Benjilo12/Product-Dashboard.git
+   
 2. **Install dependencies:**
     ```bash
    npm install
