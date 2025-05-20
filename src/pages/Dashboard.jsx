@@ -1,4 +1,4 @@
-import { useProducts } from "../services/useProducts";
+import { useProducts } from "../services/getProducts";
 
 import Topbar from "../components/Topbar";
 import SearchFilter from "../components/SearchFilter";

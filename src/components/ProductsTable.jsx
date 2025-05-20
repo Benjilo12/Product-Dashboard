@@ -173,7 +173,7 @@ const ProductTable = ({ products, loading, error, hasOriginalData }) => {
           columns={columns}
           paginationModel={paginationModel}
           onPaginationModelChange={setPaginationModel}
-          pageSizeOptions={[5, 10, 25]}
+          pageSizeOptions={[5, 10]}
           components={{
             NoRowsOverlay: CustomNoRowsOverlay,
           }}

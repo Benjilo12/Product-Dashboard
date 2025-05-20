@@ -1,6 +1,6 @@
 import { TextField, Select, MenuItem, Button, Box } from "@mui/material";
 import { useProductContext } from "../Context/ProductContext";
-import { useCategories } from "../services/useProducts";
+import { useCategories } from "../services/getProducts";
 
 const SearchFilter = () => {
   const {

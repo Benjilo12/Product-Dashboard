@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import Swal from "sweetalert2";
 import { useProductContext } from "../Context/ProductContext";
-import { useDeleteProduct } from "../services/useProducts";
+import { useDeleteProduct } from "../services/getProducts";
 
 const DeleteDialog = () => {
   const { openDeleteDialog, setOpenDeleteDialog, deleteId, setDeleteId } =

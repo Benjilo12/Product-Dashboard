@@ -14,7 +14,7 @@ import {
   Button,
 } from "@mui/material";
 import { useProductContext } from "../Context/ProductContext";
-import { useCategories, useCreateProduct } from "../services/useProducts";
+import { useCategories, useCreateProduct } from "../services/getProducts";
 
 const CreateProductModal = () => {
   const { openCreateModal, setOpenCreateModal } = useProductContext();
@@ -29,6 +29,7 @@ const CreateProductModal = () => {
     rating: 0,
   });
 
+  //function to handle create product submit
   const handleSubmit = (e) => {
     e.preventDefault();
     createProduct.mutate(formData, {
@@ -42,6 +43,7 @@ const CreateProductModal = () => {
     });
   };
 
+  //handle modal close
   const handleClose = () => {
     setOpenCreateModal(false);
     setFormData({
@@ -54,6 +56,7 @@ const CreateProductModal = () => {
   };
 
   return (
+    //create product form
     <Dialog
       open={openCreateModal}
       onClose={handleClose}

@@ -11,7 +11,7 @@ import {
   FormControl,
   Button,
 } from "@mui/material";
-import { useCategories, useUpdateProduct } from "../services/useProducts";
+import { useCategories, useUpdateProduct } from "../services/getProducts";
 import { useProductContext } from "../Context/ProductContext";
 
 const EditProductModal = () => {
@@ -19,51 +19,53 @@ const EditProductModal = () => {
     useProductContext();
 
   const { data: categories = [] } = useCategories();
-  const updateProduct = useUpdateProduct();
+  const { mutate: updateProduct, isPending: isUpdating } = useUpdateProduct();
 
   const [formData, setFormData] = React.useState({
     name: "",
     description: "",
     price: 0,
     category: "",
-    rating: 0, // Add rating to initial state
+    rating: 0,
   });
 
+  // preload data when a product was clicked
   useEffect(() => {
     if (selectedProduct) {
       setFormData({
-        name: selectedProduct.name || "",
-        description: selectedProduct.description || "",
-        price: selectedProduct.price || 0,
-        category: selectedProduct.category || "",
-        rating: selectedProduct.rating || 0, // Populate rating from selected product
+        name: selectedProduct.name ?? "",
+        description: selectedProduct.description ?? "",
+        price: selectedProduct.price ?? 0,
+        category: selectedProduct.category ?? "",
+        rating: selectedProduct.rating ?? 0,
       });
     }
   }, [selectedProduct]);
 
+  // submit handler
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateProduct.mutate({ ...formData, id: selectedProduct.id });
-    setOpenEditModal(false);
+    updateProduct(
+      { ...formData, id: selectedProduct.id },
+      {
+        onSuccess: () => {
+          setOpenEditModal(false); // close only when backend confirms
+        },
+      }
+    );
   };
 
   const handleClose = () => {
+    if (isUpdating) return; // prevent closing while saving
     setOpenEditModal(false);
-    setFormData({
-      name: "",
-      description: "",
-      price: 0,
-      category: "",
-      rating: 0, // Reset rating on close
-    });
   };
 
   return (
     <Dialog open={openEditModal} onClose={handleClose} fullWidth maxWidth="md">
       <DialogTitle>Edit Product</DialogTitle>
+
       <form onSubmit={handleSubmit}>
         <DialogContent dividers>
-          {/* Existing fields */}
           <TextField
             autoFocus
             margin="dense"
@@ -73,6 +75,7 @@ const EditProductModal = () => {
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
           />
+
           <TextField
             margin="dense"
             label="Description"
@@ -85,6 +88,7 @@ const EditProductModal = () => {
             }
             required
           />
+
           <TextField
             margin="dense"
             label="Price"
@@ -97,16 +101,11 @@ const EditProductModal = () => {
             required
           />
 
-          {/* Rating Field */}
           <TextField
             margin="dense"
             label="Rating"
             type="number"
-            inputProps={{
-              min: 0,
-              max: 5,
-              step: "0.1",
-            }}
+            inputProps={{ min: 0, max: 5, step: "0.1" }}
             fullWidth
             value={formData.rating}
             onChange={(e) =>
@@ -125,18 +124,26 @@ const EditProductModal = () => {
               }
               required
             >
-              {categories.map((category) => (
-                <MenuItem key={category} value={category}>
-                  {category}
+              {categories.map((c) => (
+                <MenuItem key={c} value={c}>
+                  {c}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </DialogContent>
+
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" variant="contained" color="primary">
-            Save Changes
+          <Button onClick={handleClose} disabled={isUpdating}>
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isUpdating}
+          >
+            {isUpdating ? "Saving…" : "Save Changes"}
           </Button>
         </DialogActions>
       </form>
