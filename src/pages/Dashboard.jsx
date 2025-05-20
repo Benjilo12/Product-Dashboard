@@ -1,6 +1,6 @@
 import { useProducts } from "../services/getProducts";
+import TopBar from "../components/TopBar";
 
-import Topbar from "../components/Topbar";
 import SearchFilter from "../components/SearchFilter";
 import ProductTable from "../components/ProductsTable";
 import ProductModal from "../components/ProductModal";
@@ -25,7 +25,7 @@ function Dashboard() {
 
   return (
     <div className="bg-gray-100 flex-1 overflow-hidden">
-      <Topbar />
+      <TopBar />
       <div className="py-3 ml-4 max-w-9xl mx-auto">
         {/* filter component */}
         <SearchFilter />
