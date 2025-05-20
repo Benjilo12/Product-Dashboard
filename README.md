@@ -77,5 +77,45 @@ Setup instructions (how to run it locally)
 * Navigate between pages using the **Previous/Next** buttons.  
 * Jump to a specific page by clicking a page number.  
 * Adjust rows per page using the dropdown (e.g., 5, 10).  
-* The table dynamically updates to show the selected page. 
+* The table dynamically updates to show the selected page.
+
+
+//-----------------------------------------------What you'd improve with more time---------------------------------------
+
+
+**Authentication & Authorization**  
+   - Add login/logout functionality for the **Profile** and **Settings** sections.  
+   - Role-based access control (e.g., admins vs. regular users).  
+
+. **Enhanced UI/UX**  
+   - **Dark Mode**: Implement theme switching using MUI’s theming system.  
+   - **Animations**: Add subtle transitions for modal openings and row updates.
+
+     **Analytics & Insights**    
+     - Add interactive charts (e.g., bar/pie/line graphs) to visualize:  
+       - Product distribution by category.  
+       - Price range analysis.    
+     - Use libraries like **Recharts** or **Victory** for seamless integration with React and MUI.
+       
+   - **Real-Time Metrics**:  
+     - Track sales performance or user engagement (if applicable).  
+     - Display monthly/yearly summaries in a dedicated analytics tab.
+    
+     **Client-Side Routing**  
+   - **React Router Integration**:  
+     - Implement seamless navigation between pages (e.g., Dashboard, Profile, Settings) using `react-router-dom`.  
+     - Ensure deep linking support for direct access to specific views (e.g., `/products`, `/settings`).
+        
+   - **Dynamic Layouts**:  
+     - Preserve shared UI elements (e.g., sidebar, header) across routes for a consistent user experience.
+      
+   - **Lazy Loading**:  
+     - Split code by route to reduce initial load time (e.g., `React.lazy` + `Suspense`).  
+   - **Protected Routes**:  
+     - Restrict access to sensitive pages (e.g., Settings) to authenticated users only.  
+
+ 
+
+ 
+   
 
