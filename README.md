@@ -35,6 +35,9 @@ Setup instructions (how to run it locally)
 * Ensures consistency and accelerates development with Material Design principles.
 * MUI’s DataGrid or Table components render the product dashboard.
 
+***React Toast Notifications***
+* Used toast messages for actions like successful creation, update, or deletion of a product
+
 ***React Context API**
 * Used Context API for state management because it's lightweight and easy to understand, also good for shared global state
 
